@@ -2328,7 +2328,9 @@ static Sec_Result retrieve_key_data(Sec_ProcessorHandle* processorHandle, SEC_OB
 
     /* check in app_dir */
     char* sec_dirs[] = {processorHandle->app_dir, processorHandle->global_dir};
+    SEC_LOG_ERROR("BBLOG: app_dir = %s, global_dir = %s", processorHandle->app_dir, processorHandle->global_dir);
     for (int i = 0; i < 2; i++) {
+        SEC_LOG_ERROR("BBLOG: processing dir index %d", i);
         if (sec_dirs[i] != NULL) {
             snprintf(file_name_key, sizeof(file_name_key), "%s" SEC_KEY_FILENAME_PATTERN, sec_dirs[i],
                     object_id);
