@@ -1247,6 +1247,12 @@ Sec_Result verify_verification_file(Sec_ProcessorHandle* processorHandle, char* 
         SEC_LOG_ERROR("Could not read verification file");
         return SEC_RESULT_VERIFICATION_FAILED;
     }
+    SEC_LOG_ERROR("BBLOG: verify_verification_file filename: %s", filename);
+    char hex_digest[SHA256_DIGEST_LENGTH * 3 + 1];
+    for (int i = 0; i < SHA256_DIGEST_LENGTH * 2; i++) {
+        sprintf(&hex_digest[i * 3], "%02x ", digest[i]);
+    }
+    SEC_LOG_ERROR("BBLOG: digest from file: %s", hex_digest);
 
     SEC_BYTE digest_result[SHA256_DIGEST_LENGTH];
     if (SecDigest_SingleInput(processorHandle, SEC_DIGESTALGORITHM_SHA256, data, data_length, digest_result,
@@ -1268,6 +1274,11 @@ Sec_Result verify_verification_file(Sec_ProcessorHandle* processorHandle, char* 
             SEC_LOG_ERROR("Unable to calculate verification digest");
             return SEC_RESULT_VERIFICATION_FAILED;
         }
+        char hex_digest_result[SHA256_DIGEST_LENGTH * 3 + 1];
+        for (int i = 0; i < SHA256_DIGEST_LENGTH; i++) {
+            sprintf(&hex_digest_result[i * 3], "%02x ", digest_result[i]);
+        }
+        SEC_LOG_ERROR("BBLOG: verification digest (calculated): %s", hex_digest_result);
 
         if (memcmp(digest_result, digest + SHA256_DIGEST_LENGTH, SHA256_DIGEST_LENGTH) != 0) {
             SEC_LOG_ERROR("verification mismatch on info file");
