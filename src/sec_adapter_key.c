@@ -2320,7 +2320,8 @@ static Sec_Result retrieve_key_data(Sec_ProcessorHandle* processorHandle, SEC_OB
 
     CHECK_PROCHANDLE(processorHandle)
 
-    SEC_LOG_ERROR("BBLOG: in retrieve_key_data");
+    SEC_LOG_ERROR("BBLOG: in retrieve_key_data")
+    blow up
 
     /* check in RAM */
     find_ram_key_data(processorHandle, object_id, &ram_key, &ram_key_parent);
