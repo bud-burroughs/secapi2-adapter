@@ -1566,6 +1566,8 @@ Sec_KeyContainer SecKey_GetClearContainer(Sec_KeyType key_type) {
 SEC_BOOL SecKey_IsProvisioned(Sec_ProcessorHandle* processorHandle, SEC_OBJECTID object_id) {
     Sec_KeyHandle* keyHandle;
 
+    SEC_LOG_ERROR("BBLOG: in SecKey_IsProvisioned");
+    
     if (SEC_OBJECTID_INVALID == object_id)
         return SEC_FALSE;
 
@@ -2307,9 +2309,12 @@ static Sec_Result retrieve_key_data(Sec_ProcessorHandle* processorHandle, SEC_OB
 
     CHECK_PROCHANDLE(processorHandle)
 
+    SEC_LOG_ERROR("BBLOG: in retrieve_key_data");
+
     /* check in RAM */
     find_ram_key_data(processorHandle, object_id, &ram_key, &ram_key_parent);
     if (ram_key != NULL) {
+        SEC_LOG_ERROR("BBLOG: found key in RAM");
         memcpy(keyData, &(ram_key->key_data), sizeof(Sec_KeyData));
         *location = SEC_STORAGELOC_RAM;
         return SEC_RESULT_SUCCESS;
@@ -2317,7 +2322,9 @@ static Sec_Result retrieve_key_data(Sec_ProcessorHandle* processorHandle, SEC_OB
 
     /* check in app_dir */
     char* sec_dirs[] = {processorHandle->app_dir, processorHandle->global_dir};
+    SEC_LOG_ERROR("BBLOG: app_dir = %s, global_dir = %s", processorHandle->app_dir, processorHandle->global_dir);
     for (int i = 0; i < 2; i++) {
+        SEC_LOG_ERROR("BBLOG: processing dir index %d", i);
         if (sec_dirs[i] != NULL) {
             snprintf(file_name_key, sizeof(file_name_key), "%s" SEC_KEY_FILENAME_PATTERN, sec_dirs[i],
                     object_id);
@@ -2325,6 +2332,7 @@ static Sec_Result retrieve_key_data(Sec_ProcessorHandle* processorHandle, SEC_OB
                     object_id);
             snprintf(file_name_verification, sizeof(file_name_verification), "%s" SEC_VERIFICATION_FILENAME_PATTERN,
                     sec_dirs[i], object_id);
+            SEC_LOG_ERROR("BBLOG: file_name_key = %s, file_name_verification = %s", file_name_key, file_name_verification);
             if (SecUtils_FileExists(file_name_key) && SecUtils_FileExists(file_name_info)) {
                 if (SecUtils_ReadFile(file_name_key, keyData->key_container, sizeof(keyData->key_container),
                             &keyData->kc_len) != SEC_RESULT_SUCCESS ||
