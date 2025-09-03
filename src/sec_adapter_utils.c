@@ -30,14 +30,18 @@ Sec_Result SecUtils_ReadFile(const char* path, void* data, SEC_SIZE data_len, SE
 
     *data_read = 0;
 
+    SEC_LOG_ERROR("BBLOG: in SecUtils_ReadFile, path: %s", path);
+
     f = fopen(path, "rbe");
     if (f == NULL) {
         SEC_LOG_ERROR("Could not open file: %s", path);
         return SEC_RESULT_FAILURE;
     }
 
+    SEC_LOG_ERROR("BBLOG: Entering read loop");
     while (ferror(f) == 0 && feof(f) == 0 && *data_read < data_len) {
         *data_read += fread(data, 1, data_len - *data_read, f);
+        SEC_LOG_ERROR("BBLOG: Read %zu bytes from file: %s", *data_read, path);
     }
 
     if (ferror(f) != 0) {
