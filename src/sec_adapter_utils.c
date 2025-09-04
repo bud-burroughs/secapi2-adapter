@@ -44,6 +44,13 @@ Sec_Result SecUtils_ReadFile(const char* path, void* data, SEC_SIZE data_len, SE
         SEC_LOG_ERROR("BBLOG: Read %zu bytes from file: %s", *data_read, path);
     }
 
+    // Print the first four bytes
+    if (*data_read >= 4) {
+        SEC_LOG_ERROR("BBLOG: First four bytes: %02x %02x %02x %02x",
+                      ((SEC_BYTE*)data)[0], ((SEC_BYTE*)data)[1],
+                      ((SEC_BYTE*)data)[2], ((SEC_BYTE*)data)[3]);
+    }
+
     if (ferror(f) != 0) {
         SEC_LOG_ERROR("Ferror encountered while reading file: %s", path);
         fclose(f);
