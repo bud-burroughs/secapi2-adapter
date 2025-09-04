@@ -30,9 +30,9 @@ Sec_Result SecUtils_ReadFile(const char* path, void* data, SEC_SIZE data_len, SE
 
     *data_read = 0;
 
-    SEC_LOG_ERROR("BBLOG: in SecUtils_ReadFile, path: %s", path);
+    SEC_LOG_ERROR("BBLOG: in SecUtils_ReadFile, removed e from mode, path: %s", path);
 
-    f = fopen(path, "rbe");
+    f = fopen(path, "rb");
     if (f == NULL) {
         SEC_LOG_ERROR("Could not open file: %s", path);
         return SEC_RESULT_FAILURE;
