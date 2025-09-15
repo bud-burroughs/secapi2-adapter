@@ -19,6 +19,7 @@
 #include "sec_security_utils.h"
 #include <ctype.h>
 #include <stdbool.h>
+#include <fcntl.h>
 
 static const SEC_BYTE base64_chars[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
@@ -37,6 +38,10 @@ Sec_Result SecUtils_ReadFile(const char* path, void* data, SEC_SIZE data_len, SE
         SEC_LOG_ERROR("Could not open file: %s", path);
         return SEC_RESULT_FAILURE;
     }
+
+    SEC_LOG_ERROR("BBLOG: invalidating cache");
+    int fd = fileno(f);
+    posix_fadvise(fd, 0, 0, POSIX_FADV_DONTNEED);
 
     SEC_LOG_ERROR("BBLOG: Entering read loop");
     while (ferror(f) == 0 && feof(f) == 0 && *data_read < data_len) {
