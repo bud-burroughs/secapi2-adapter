@@ -2404,7 +2404,7 @@ static Sec_Result store_key_data(Sec_ProcessorHandle* processorHandle, Sec_Stora
             return SEC_RESULT_FAILURE;
         }
 
-        SecKey_Delete(processorHandle, object_id);
+        //SecKey_Delete(processorHandle, object_id);
 
         char file_name_key[SEC_MAX_FILE_PATH_LEN];
         char file_name_info[SEC_MAX_FILE_PATH_LEN];
