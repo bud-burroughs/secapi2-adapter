@@ -2404,6 +2404,7 @@ static Sec_Result store_key_data(Sec_ProcessorHandle* processorHandle, Sec_Stora
             return SEC_RESULT_FAILURE;
         }
 
+        SEC_LOG_ERROR("BBLOG: not deleteing old key");
         //SecKey_Delete(processorHandle, object_id);
 
         char file_name_key[SEC_MAX_FILE_PATH_LEN];
