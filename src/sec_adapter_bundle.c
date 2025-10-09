@@ -123,8 +123,6 @@ static Sec_Result Sec_StoreBundleData(Sec_ProcessorHandle* processorHandle, SEC_
             return SEC_RESULT_FAILURE;
         }
 
-        SecBundle_Delete(processorHandle, object_id);
-
         char file_name_bundle[SEC_MAX_FILE_PATH_LEN];
         char file_name_verification[SEC_MAX_FILE_PATH_LEN];
         snprintf(file_name_bundle, sizeof(file_name_bundle), "%s" SEC_BUNDLE_FILENAME_PATTERN, processorHandle->app_dir,

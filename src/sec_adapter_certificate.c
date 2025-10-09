@@ -223,8 +223,6 @@ static Sec_Result Sec_StoreCertificateData(Sec_ProcessorHandle* processorHandle,
             return SEC_RESULT_FAILURE;
         }
 
-        SecCertificate_Delete(processorHandle, object_id);
-
         char file_name_cert[SEC_MAX_FILE_PATH_LEN];
         char file_name_info[SEC_MAX_FILE_PATH_LEN];
         char file_name_verification[SEC_MAX_FILE_PATH_LEN];
